@@ -34,3 +34,13 @@ func handle_click(tile: PuzzleTile):
 		move_child(EmptyTileObj, new_idx)
 		EmptyTileObj.set_pos(pos)
 		EmptyTileIdx = new_idx
+
+func _shuffle(num_shuffles: int):
+	var children := get_children()
+	var max_n := len(children)
+	for x in range(num_shuffles):
+		var pick := rand_range(0, max_n)
+		handle_click(children[pick])
+
+func _on_Button_pressed():
+	_shuffle(Shuffles)
