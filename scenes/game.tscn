@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://scripts/puzzle.gd" type="Script" id=1]
 [ext_resource path="res://fonts/COMIC.TTF" type="DynamicFontData" id=2]
+[ext_resource path="res://scripts/solver.gd" type="Script" id=3]
 
 [sub_resource type="DynamicFont" id=1]
 size = 30
@@ -13,11 +14,12 @@ default_font = SubResource( 1 )
 [node name="Control" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="GridContainer" type="GridContainer" parent="."]
+[node name="PuzzleGrid" type="GridContainer" parent="."]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -37,12 +39,23 @@ __meta__ = {
 }
 TileScene = "res://scenes/PuzzleTile.tscn"
 
-[node name="Button" type="Button" parent="."]
-margin_left = 80.0
-margin_top = 53.0
-margin_right = 296.0
-margin_bottom = 123.0
+[node name="ShuffleButton" type="Button" parent="."]
+margin_left = 64.0
+margin_top = 64.0
+margin_right = 280.0
+margin_bottom = 134.0
 theme = SubResource( 2 )
 text = "Shuffle"
 
-[connection signal="pressed" from="Button" to="GridContainer" method="_on_Button_pressed"]
+[node name="BFS" type="Button" parent="."]
+margin_left = 64.0
+margin_top = 632.0
+margin_right = 280.0
+margin_bottom = 702.0
+theme = SubResource( 2 )
+text = "Run BFS"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="ShuffleButton" to="PuzzleGrid" method="_on_Shuffle_Pressed"]

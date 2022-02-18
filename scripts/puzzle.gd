@@ -4,10 +4,27 @@ extends GridContainer
 export var Shuffles := 1000
 export var TileScene: String
 var EmptyTileObj: PuzzleTile
-var EmptyTileIdx := 8
+var EmptyTileIdx: int = 8
 
-var GameState: String
+var GameState: String = ""
 var StateHash: int = 0
+
+func _init(state: String = ""):
+	if state != "":
+		GameState = state
+		var pos := Vector2(0,0)
+		for x in GameState:
+			var tile := PuzzleTile.new()
+			tile.set_pos(pos)
+			tile.set_text(x)
+			self.add_child(tile)
+			
+			if tile.EmptyTile:
+				EmptyTileIdx = len(get_children())-1
+				EmptyTileObj = tile
+			if pos.x == 2:
+				pos.y += 1
+			pos.x = int(pos.x + 1) % 3
 
 func _ready():
 	var TileSceneRes := load(TileScene)
@@ -57,5 +74,5 @@ func _shuffle(num_shuffles: int):
 		var pick := rand_range(0, max_n)
 		handle_click(children[pick])
 
-func _on_Button_pressed():
+func _on_Shuffle_Pressed():
 	_shuffle(Shuffles)

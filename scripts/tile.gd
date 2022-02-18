@@ -7,8 +7,9 @@ var CurrentPos: Vector2
 var ID: String
 
 func set_text(label):
-	text = label
-	EmptyTile = len(label.strip_edges()) == 0
+	EmptyTile = (label == "_") or (len(label.strip_edges()) == 0)
+	text = label if not EmptyTile else " "
+	ID = "_" if EmptyTile else text
 
 func set_rect_size(sz: Vector2):
 	rect_size = sz
@@ -19,7 +20,6 @@ func set_pos(pos: Vector2):
 
 func _ready():
 	GameBoard = get_parent()
-	ID = "_" if EmptyTile else text
 
 func _on_PuzzleTile_pressed():
 	if EmptyTile:
